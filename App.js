@@ -6,16 +6,12 @@
  */
 
 import React from 'react';
-import {
-  Text,
-  View,
-  SafeAreaView
-} from 'react-native';
 
 import {
-  useSafeAreaInsets,
-  SafeAreaProvider
+  SafeAreaProvider,
 } from 'react-native-safe-area-context'
+
+import Home from './Home';
 
 const App = () => {
 
@@ -26,20 +22,7 @@ const App = () => {
   )
 }
 
-const Home = () => {
 
-  const {top} = useSafeAreaInsets()
-
-  return (
-    <View style={{
-      marginTop: top
-    }}>
-      <View>
-        <Text>Hello World</Text>
-      </View>
-    </View>
-  );
-}
 
 // const styles = StyleSheet.create({
 //   sectionContainer: {
