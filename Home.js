@@ -3,7 +3,8 @@ import React, {useState, useEffect} from "react";
 import {
     Text,
     View,
-    FlatList
+    FlatList,
+    TouchableOpacity
 } from 'react-native';
 
 import {
@@ -11,6 +12,8 @@ import {
 } from 'react-native-safe-area-context'
 
 import axios from 'axios'
+
+import Button from "./Button";
 
 const Home = () => {
 
@@ -72,6 +75,12 @@ const Home = () => {
                     }}
                     keyExtractor={item => item._id}
                 />
+            </View>
+            <View style={{
+                marginTop: 50,
+                alignItems: 'center'
+            }}>
+                <Button variant="secondary" />
             </View>
         </View>
     );
