@@ -4,14 +4,19 @@ import {
   View,
   Text,
   SafeAreaView,
-  FlatList
+  FlatList,
+  TouchableOpacity
 } from 'react-native'
 
 import Button from './Button';
 
 import axios from 'axios';
 
+import { useNavigation } from '@react-navigation/native';
+
 const Home = () => {
+
+    const {navigate} = useNavigation()
 
     const [userList, setUserList] = useState([])
   
@@ -44,11 +49,16 @@ const Home = () => {
           <FlatList 
             data={userList}
             renderItem={({item}) => (
-                <View style={{
-                  margin: 10
+                <TouchableOpacity activeOpacity={0.6} onPress={() => {
+                    console.log('selected', item)
+                    navigate('Detail', item)
                 }}>
-                  <Text>{item.firstName} {item.lastName}</Text>
-                </View>
+                    <View style={{
+                    margin: 10
+                    }}>
+                    <Text>{item.firstName} {item.lastName}</Text>
+                    </View>
+                </TouchableOpacity>
               )
             }
             keyExtractor={item => item._id}
