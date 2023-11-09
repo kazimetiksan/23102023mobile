@@ -1,68 +1,23 @@
-import React, {useState} from 'react';
+import React from 'react';
 
-import {
-  View,
-  Text,
-  SafeAreaView,
-  FlatList
-} from 'react-native'
+import Home from './Home';
+import Detail from './Detail';
 
-import Button from './Button';
-
-import axios from 'axios';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const App = () => {
 
-  const [userList, setUserList] = useState([])
+  const Stack = createNativeStackNavigator();
 
-  const loadData = () => {
-    
-    const url = 'https://reactpm.azurewebsites.net/api/users'
-    axios.get(url)
-    .then((response) => {
-
-      setUserList(response.data)
-
-    })
-    .catch((error) => {
-
-    })
-  }
-
-  return (
-    <SafeAreaView>
-      <View>
-        <Button title="Load Data" onPress={() => {
-            console.log('-- pressed');
-
-            loadData()
-        }} />
-      </View>
-      <View>
-      {
-        userList.map((item) => {
-          return (
-            <View key={item._id}>
-              <Text>{item.firstName} {item.lastName}</Text>
-            </View>
-          )
-        })
-      }
-      </View>
-      <View>
-        <FlatList 
-          data={userList}
-          renderItem={({item}) => (
-              <View>
-                <Text>{item.firstName} {item.lastName}</Text>
-              </View>
-            )
-          }
-          keyExtractor={item => item._id}
-        />
-      </View>
-    </SafeAreaView>
-  )
+    return (
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name='Home' component={Home} />
+          <Stack.Screen name='Detail' component={Detail} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    )
 }
 
 export default App;
