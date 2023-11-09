@@ -1,46 +1,68 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
+import React, {useState} from 'react';
 
 import {
-  SafeAreaProvider,
-} from 'react-native-safe-area-context'
+  View,
+  Text,
+  SafeAreaView,
+  FlatList
+} from 'react-native'
 
-import Home from './Home';
+import Button from './Button';
+
+import axios from 'axios';
 
 const App = () => {
 
+  const [userList, setUserList] = useState([])
+
+  const loadData = () => {
+    
+    const url = 'https://reactpm.azurewebsites.net/api/users'
+    axios.get(url)
+    .then((response) => {
+
+      setUserList(response.data)
+
+    })
+    .catch((error) => {
+
+    })
+  }
+
   return (
-    <SafeAreaProvider>
-      <Home />
-    </SafeAreaProvider>
+    <SafeAreaView>
+      <View>
+        <Button title="Load Data" onPress={() => {
+            console.log('-- pressed');
+
+            loadData()
+        }} />
+      </View>
+      <View>
+      {
+        userList.map((item) => {
+          return (
+            <View key={item._id}>
+              <Text>{item.firstName} {item.lastName}</Text>
+            </View>
+          )
+        })
+      }
+      </View>
+      <View>
+        <FlatList 
+          data={userList}
+          renderItem={({item}) => (
+              <View>
+                <Text>{item.firstName} {item.lastName}</Text>
+              </View>
+            )
+          }
+          keyExtractor={item => item._id}
+        />
+      </View>
+    </SafeAreaView>
   )
 }
-
-
-
-// const styles = StyleSheet.create({
-//   sectionContainer: {
-//     marginTop: 32,
-//     paddingHorizontal: 24,
-//   },
-//   sectionTitle: {
-//     fontSize: 24,
-//     fontWeight: '600',
-//   },
-//   sectionDescription: {
-//     marginTop: 8,
-//     fontSize: 18,
-//     fontWeight: '400',
-//   },
-//   highlight: {
-//     fontWeight: '700',
-//   },
-// });
 
 export default App;
